@@ -1,0 +1,52 @@
+﻿using App.Application.Helpers;
+using App.Domain.Entities;
+using App.Domain.Repository;
+using App.Domain.Services;
+using App.Domain.ViewModel.Request.UserInfo;
+using App.Domain.ViewModel.Response;
+using App.Domain.ViewModel.Response.UserInfo;
+using Microsoft.Extensions.Configuration;
+
+namespace App.Application.Usecases.Authentication;
+
+public class AuthenticationService(
+    IUserInformationsRepository _userInfoRepository,
+    IUnitOfWork _unitOfWork,
+    IConfiguration _configuration
+) : IAuthenticationService
+{
+    public async Task<BaseResponse<LoginResponse>> LoginServiceAsync(LoginInformations login, CancellationToken cancellationToken)
+    {
+        var result = await _userInfoRepository.GetAllUsers(cancellationToken);
+        var user = result.FirstOrDefault(u => u.Email == login.Email && PasswordHash.Verify(u.Password, login.Password));
+
+        if (user is null)
+            return new BaseResponse<LoginResponse>(null, 404, "Usuário não encontrado ou senha incorreta.");
+
+        var token = TokenService.GenerateToken(user, _configuration);
+        var response = new LoginResponse(token, user.Name ,user.Email);
+
+        return new BaseResponse<LoginResponse>(response, 200, "Success.");
+    }
+
+    public async Task<BaseResponse<RegisterInformation>> CreateUserServiceAsync(RegisterInformation request, CancellationToken cancellationToken)
+    {
+        var ListaUsers = await _userInfoRepository.GetAllUsers(cancellationToken);
+
+        if (ListaUsers.Any())
+        {
+            var Register = ListaUsers.FirstOrDefault(u => u.Cpf.Equals(request.Cpf) || u.Email.Equals(request.Email));
+
+            if (Register is not null)
+                return new BaseResponse<RegisterInformation>(null, 500, "Usuario ja cadastrado no sistema");
+        }
+
+        request.Password = PasswordHash.Hash(request.Password);
+        UserInformations NewUser = new(request);
+
+        await _userInfoRepository.CreateAsync(NewUser, cancellationToken);
+        await _unitOfWork.CommitAsync();
+
+        return new BaseResponse<RegisterInformation>(request, 200, "Success."); ;
+    }
+}
