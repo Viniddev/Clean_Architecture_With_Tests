@@ -1,6 +1,6 @@
 ﻿using App.Domain.Abstractions;
 using App.Domain.ViewModel.Request.UserInfo;
-using System.Net;
+using App.Domain.Enums;
 
 namespace App.Domain.Entities;
 
@@ -15,6 +15,7 @@ public class UserInformations: BaseEntity, IAggregateRoot
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
     public string PhoneNumber { get; private set; } = string.Empty;
+    public EUserRoles UserRole { get; private set; } = EUserRoles.User;
 
     public UserInformations(RegisterInformation userInformations)
     {
@@ -25,6 +26,7 @@ public class UserInformations: BaseEntity, IAggregateRoot
         Email = userInformations.Email;
         Password = userInformations.Password;
         PhoneNumber = userInformations.PhoneNumber;
+        UserRole = userInformations.UserRole;
     }
 
     public void Update(RegisterInformation userInformations)
@@ -32,11 +34,11 @@ public class UserInformations: BaseEntity, IAggregateRoot
         if (userInformations != null)
         {
             Name = userInformations.Name;
-            Cpf = userInformations.Cpf;
             Rg = userInformations.Rg;
             Email = userInformations.Email;
             Password = userInformations.Password;
             PhoneNumber = userInformations.PhoneNumber;
+            UserRole = userInformations.UserRole;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using App.Domain.Entities;
+using App.Domain.Enums;
 
 namespace App.Domain.ViewModel.Request.UserInfo;
 
@@ -11,6 +12,8 @@ public class RegisterInformation
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
+    public EUserRoles UserRole { get; private set; } = EUserRoles.User;
+
 
     public static RegisterInformation Map(UserInformations user) 
     {
@@ -22,7 +25,8 @@ public class RegisterInformation
             Rg = user.Rg,
             Email = user.Email,
             Password = user.Password,
-            PhoneNumber = user.PhoneNumber
+            PhoneNumber = user.PhoneNumber,
+            UserRole = user.UserRole
         };
     }
 }

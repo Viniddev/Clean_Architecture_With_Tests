@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using App.Infrastructure;
-using Microsoft.Extensions.Configuration;
 
 namespace App.Api.Common;
 

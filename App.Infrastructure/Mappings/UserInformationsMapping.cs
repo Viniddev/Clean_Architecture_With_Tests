@@ -54,5 +54,9 @@ public class UserInformationsMapping : IEntityTypeConfiguration<UserInformations
             .HasColumnType("NVARCHAR")
             .HasMaxLength(30)
             .IsRequired();
+
+        builder.Property(x => x.UserRole)
+            .HasColumnType("TINYINT")
+            .IsRequired();
     }
 }
