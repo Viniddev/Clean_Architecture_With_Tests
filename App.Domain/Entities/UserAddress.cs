@@ -4,7 +4,7 @@ using App.Domain.ViewModel.Request.Address;
 
 namespace App.Domain.Entities;
 
-public class UserAddress : BaseEntity
+public class UserAddress : BaseEntity, IAggregateRoot
 {
     public string Cep { get; set; } = string.Empty;
     public string Street { get; set; } = string.Empty;
@@ -21,10 +21,6 @@ public class UserAddress : BaseEntity
             Neighborhood = newAddress.Neighborhood;
             City = newAddress.City;
             Number = newAddress.Number;
-        }
-        else
-        {
-            throw new ArgumentNullException(nameof(newAddress));
         }
     }
 }

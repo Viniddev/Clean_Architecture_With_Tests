@@ -2,7 +2,7 @@
 using App.Domain.ViewModel.Response;
 using App.Domain.ViewModel.Response.UserInfo;
 
-namespace App.Domain.Services;
+namespace App.Domain.Services.Base;
 
 public interface IAuthenticationService
 {

@@ -3,4 +3,4 @@ using App.Domain.Repository.Base;
 
 namespace App.Domain.Repository;
 
-public interface IUserInformationsRepository: IRepositoryBase<UserInformations>;
+public interface IUserAddressRepository: IRepositoryBase<UserAddress>;

@@ -1,4 +1,4 @@
-﻿using App.Domain.Services;
+﻿using App.Domain.Services.Base;
 using App.Domain.ViewModel.Request.UserInfo;
 using Microsoft.AspNetCore.Mvc;
 

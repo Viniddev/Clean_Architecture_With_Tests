@@ -1,5 +1,6 @@
 ﻿using App.Domain.Entities;
 using App.Domain.Repository;
+using App.Domain.Repository.Base;
 using App.Domain.Services;
 using App.Domain.ViewModel.Request;
 using App.Domain.ViewModel.Request.UserInfo;

@@ -1,6 +1,6 @@
 ﻿namespace App.Domain.Abstractions;
 
-public class BaseEntity
+public abstract class BaseEntity
 {
     public Guid Id { get; init; } = new Guid();
     public DateTime CreationDate { get; init; } = DateTime.Now;

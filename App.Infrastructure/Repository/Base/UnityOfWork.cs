@@ -1,7 +1,7 @@
-﻿using App.Domain.Repository;
+﻿using App.Domain.Repository.Base;
 using App.Infrastructure.Data;
 
-namespace App.Infrastructure.Repository;
+namespace App.Infrastructure.Repository.Base;
 
 public class UnitOfWork(AppDbContext _dbContext) : IUnitOfWork
 {

@@ -5,5 +5,5 @@ using App.Infrastructure.Repository.Base;
 
 namespace App.Infrastructure.Repository;
 
-public class UserInformationsRepository(AppDbContext _Dbcontext): 
-    RepositoryBase<UserInformations>(_Dbcontext), IUserInformationsRepository;
+public class UserAddressRepository(AppDbContext _dbContext): 
+    RepositoryBase<UserAddress>(_dbContext), IUserAddressRepository;

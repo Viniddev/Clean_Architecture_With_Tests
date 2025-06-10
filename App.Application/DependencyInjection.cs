@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using App.Domain.Services;
 using App.Application.Usecases.UserData;
+using App.Domain.Services.Base;
 
 namespace App.Application;
 
