@@ -76,7 +76,7 @@ public class RepositoryBase<TEntity>(AppDbContext _context) : IRepositoryBase<TE
         }
         catch 
         {
-            return default;
+            return [];
         }
     }
 }
