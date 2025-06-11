@@ -13,6 +13,7 @@ public class RegisterInformation
     public string Password { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public EUserRoles UserRole { get; private set; } = EUserRoles.User;
+    public Guid UserAddressId { get; private set; }
 
 
     public static RegisterInformation Map(UserInformations user) 
@@ -26,7 +27,8 @@ public class RegisterInformation
             Email = user.Email,
             Password = user.Password,
             PhoneNumber = user.PhoneNumber,
-            UserRole = user.UserRole
+            UserRole = user.UserRole,
+            UserAddressId = user.UserAddressId,
         };
     }
 }

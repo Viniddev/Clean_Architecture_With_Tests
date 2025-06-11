@@ -44,5 +44,9 @@ public class UserInformationsMapping : EntityBaseMapping, IEntityTypeConfigurati
         builder.Property(x => x.UserRole)
             .HasColumnType("TINYINT")
             .IsRequired();
+
+        builder.Property(u => u.UserAddressId)
+            .HasColumnType("UNIQUEIDENTIFIER")
+           .IsRequired();
     }
 }

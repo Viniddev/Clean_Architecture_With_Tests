@@ -15,7 +15,11 @@ public class UserInformations: BaseEntity, IAggregateRoot
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
     public string PhoneNumber { get; private set; } = string.Empty;
+
     public EUserRoles UserRole { get; private set; } = EUserRoles.User;
+
+    public Guid UserAddressId { get; private set; }
+    public virtual UserAddress UserAddress { get; private set; } = null!;
 
     public UserInformations(RegisterInformation userInformations)
     {
@@ -27,6 +31,7 @@ public class UserInformations: BaseEntity, IAggregateRoot
         Password = userInformations.Password;
         PhoneNumber = userInformations.PhoneNumber;
         UserRole = userInformations.UserRole;
+        UserAddressId = userInformations.UserAddressId;
     }
 
     public void Update(RegisterInformation userInformations)
@@ -39,6 +44,7 @@ public class UserInformations: BaseEntity, IAggregateRoot
             Password = userInformations.Password;
             PhoneNumber = userInformations.PhoneNumber;
             UserRole = userInformations.UserRole;
+            UserAddressId = userInformations.UserAddressId;
         }
     }
 }
