@@ -1,4 +1,6 @@
-﻿namespace App.Domain.ViewModel.Response.Address;
+﻿using App.Domain.Entities;
+
+namespace App.Domain.ViewModel.Response.Address;
 
 public class AddressResponse
 {
@@ -9,4 +11,18 @@ public class AddressResponse
     public string Neighborhood { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public int Number { get; set; }
+
+    public static AddressResponse Map(UserAddress address)
+    {
+        return new()
+        {
+            Id = address.Id,
+            CreationDate = address.CreationDate,
+            Cep = address.Cep,
+            Street = address.Street,
+            Neighborhood = address.Neighborhood,
+            City = address.City,
+            Number = address.Number
+        };
+    }
 }

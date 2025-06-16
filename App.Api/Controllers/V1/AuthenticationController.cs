@@ -25,10 +25,9 @@ public static class AuthenticationController
 
         var result = await _userService.CreateUserServiceAsync(registryInformation, cancellationToken);
         
-        if(result.Data is not null)
-            return Results.Ok(result);
-        else
-            return Results.BadRequest(result);
+        return result.Data is not null
+            ? Results.Ok(result)
+            : Results.BadRequest(result);
     }
 
     public static async Task<IResult> LoginAsync(
@@ -42,9 +41,8 @@ public static class AuthenticationController
 
         var result = await _userService.LoginServiceAsync(login, cancellationToken);
 
-        if (result.Data is not null)
-            return Results.Ok(result);
-        else
-            return Results.BadRequest(result);
+        return result.Data is not null
+            ? Results.Ok(result)
+            : Results.BadRequest(result);
     }
 }

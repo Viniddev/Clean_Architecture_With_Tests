@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Infrastructure.Mappings;
 
-public class UserAddressMapping : EntityBaseMapping, IEntityTypeConfiguration<UserAddress>, IAggregateRoot
+public class UserAddressMapping : EntityBaseMapping<UserAddress>, IEntityTypeConfiguration<UserAddress>, IAggregateRoot
 {
-    public void Configure(EntityTypeBuilder<UserAddress> builder)
+    public new void Configure(EntityTypeBuilder<UserAddress> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("UserAddress");
 
         builder.Property(x => x.Cep)

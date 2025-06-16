@@ -11,8 +11,8 @@ public static class UsersController
     {
         var group = map.MapGroup("api/v1/users/");
 
-        group.MapPut("getAll", GetAll);
-        group.MapGet("getById/{Id}", GetById);
+        group.MapPut("get-all", GetAll);
+        group.MapGet("get-by-id/{Id}", GetById);
         group.MapPut("update", UpdateInformations);
         group.MapDelete("delete/{Id}", Delete);
     }
@@ -25,10 +25,9 @@ public static class UsersController
     {
         var response = await _userService.GetAllUsersService(request, cancellationToken);
 
-        if (response.Data is not null)
-            return Results.Ok(response);
-        else
-            return Results.NoContent();
+        return response.Data is not null
+            ? Results.Ok(response)
+            : Results.BadRequest(response);
     }
 
     public static async Task<IResult> GetById(
@@ -39,10 +38,9 @@ public static class UsersController
     {
         var response = await _userService.GetUserByIdService(Id, cancellationToken);
 
-        if (response.Data is not null)
-            return Results.Ok(response);
-        else
-            return Results.NoContent();
+        return response.Data is not null
+            ? Results.Ok(response)
+            : Results.BadRequest(response);
     }
 
     public static async Task<IResult> UpdateInformations(
@@ -53,10 +51,9 @@ public static class UsersController
     {
         var response = await _userService.UpdateUserService(request, cancellationToken);
 
-        if (response.Data == true)
-            return Results.Ok(response);
-        else
-            return Results.NoContent();
+        return response.Data
+            ? Results.Ok(response)
+            : Results.BadRequest(response);
     }
 
     public static async Task<IResult> Delete(
@@ -67,9 +64,8 @@ public static class UsersController
     {
         var response = await _userService.DeleteUserService(Id, cancellationToken);
 
-        if (response.Data)
-            return Results.Ok(response);
-        else
-            return Results.NoContent();
+        return response.Data
+            ? Results.Ok(response)
+            : Results.BadRequest(response);
     }
 }

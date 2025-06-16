@@ -25,5 +25,6 @@ public static class AppExtensions
     {
         app.MapAuthenticationEndpoints();
         app.MapUsersEndpoints();
+        app.MapUserAddressEndpoints();
     }
 }

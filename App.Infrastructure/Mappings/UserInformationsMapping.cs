@@ -3,13 +3,16 @@ using App.Domain.Abstractions;
 using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace App.Infrastructure.Mappings;
 
-public class UserInformationsMapping : EntityBaseMapping, IEntityTypeConfiguration<UserInformations>, IAggregateRoot
+public class UserInformationsMapping : EntityBaseMapping<UserInformations>, IEntityTypeConfiguration<UserInformations>, IAggregateRoot
 {
-    public void Configure(EntityTypeBuilder<UserInformations> builder)
+    public new void Configure(EntityTypeBuilder<UserInformations> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("UserInformations");
 
         builder.Property(x => x.Name)
@@ -47,6 +50,6 @@ public class UserInformationsMapping : EntityBaseMapping, IEntityTypeConfigurati
 
         builder.Property(u => u.UserAddressId)
             .HasColumnType("UNIQUEIDENTIFIER")
-           .IsRequired();
+            .IsRequired();
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Infrastructure.Mappings;
 
-public class EntityBaseMapping : IEntityTypeConfiguration<BaseEntity>
+public abstract class EntityBaseMapping<T> : IEntityTypeConfiguration<T>  where T : BaseEntity
 {
-    public void Configure(EntityTypeBuilder<BaseEntity> builder)
+    public void Configure(EntityTypeBuilder<T> builder)
     {
         builder.HasKey(x => x.Id);
 

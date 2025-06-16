@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250606033822_v1")]
+    [Migration("20250615203953_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -21,9 +21,55 @@ namespace App.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("App.Domain.Entities.UserAddress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
+
+                    b.Property<string>("Neighborhood")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("INT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAddress", (string)null);
+                });
 
             modelBuilder.Entity("App.Domain.Entities.UserInformations", b =>
                 {
@@ -69,9 +115,28 @@ namespace App.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("DATETIME2");
 
+                    b.Property<Guid>("UserAddressId")
+                        .HasColumnType("UNIQUEIDENTIFIER");
+
+                    b.Property<byte>("UserRole")
+                        .HasColumnType("TINYINT");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserAddressId");
+
                     b.ToTable("UserInformations", (string)null);
+                });
+
+            modelBuilder.Entity("App.Domain.Entities.UserInformations", b =>
+                {
+                    b.HasOne("App.Domain.Entities.UserAddress", "UserAddress")
+                        .WithMany()
+                        .HasForeignKey("UserAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserAddress");
                 });
 #pragma warning restore 612, 618
         }

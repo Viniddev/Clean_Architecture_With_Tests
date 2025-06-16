@@ -8,7 +8,6 @@ public class UserInformations: BaseEntity, IAggregateRoot
 {
     //default constructor for EF Core
     public UserInformations() { }
-
     public string Name { get; private set; } = string.Empty;
     public string Cpf { get; private set; } = string.Empty;
     public string Rg { get; private set; } = string.Empty;
@@ -23,7 +22,6 @@ public class UserInformations: BaseEntity, IAggregateRoot
 
     public UserInformations(RegisterInformation userInformations)
     {
-        Id = userInformations.Id;
         Name = userInformations.Name;
         Cpf = userInformations.Cpf;
         Rg = userInformations.Rg;

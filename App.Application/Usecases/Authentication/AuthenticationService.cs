@@ -19,7 +19,7 @@ public class AuthenticationService(
     public async Task<BaseResponse<LoginResponse>> LoginServiceAsync(LoginInformations login, CancellationToken cancellationToken)
     {
         var result = await _userInfoRepository.GetAllUsers(cancellationToken);
-        var user = result.FirstOrDefault(u => u.Email == login.Email && PasswordHash.Verify(u.Password, login.Password));
+        var user = result?.FirstOrDefault(u => u.Email == login.Email && PasswordHash.Verify(u.Password, login.Password));
 
         if (user is null)
             return new BaseResponse<LoginResponse>(null, 404, "Usuário não encontrado ou senha incorreta.");
@@ -32,9 +32,9 @@ public class AuthenticationService(
 
     public async Task<BaseResponse<RegisterInformation>> CreateUserServiceAsync(RegisterInformation request, CancellationToken cancellationToken)
     {
-        var ListaUsers = await _userInfoRepository.GetAllUsers(cancellationToken);
+        var ListaUsers = await _userInfoRepository.GetAllUsers(cancellationToken) ?? [];
 
-        if (ListaUsers.Any())
+        if (ListaUsers.Count == 0)
         {
             var Register = ListaUsers.FirstOrDefault(u => u.Cpf.Equals(request.Cpf) || u.Email.Equals(request.Email));
 
@@ -48,6 +48,6 @@ public class AuthenticationService(
         await _userInfoRepository.CreateAsync(NewUser, cancellationToken);
         await _unitOfWork.CommitAsync();
 
-        return new BaseResponse<RegisterInformation>(request, 200, "Success."); ;
+        return new BaseResponse<RegisterInformation>(request, 201, "Success."); ;
     }
 }

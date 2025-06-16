@@ -25,31 +25,11 @@ namespace App.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("App.Domain.Abstractions.BaseEntity", b =>
+            modelBuilder.Entity("App.Domain.Entities.UserAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("DATETIME2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("BIT");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("DATETIME2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BaseEntity");
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("App.Domain.Entities.UserAddress", b =>
-                {
-                    b.HasBaseType("App.Domain.Abstractions.BaseEntity");
 
                     b.Property<string>("Cep")
                         .IsRequired()
@@ -60,6 +40,12 @@ namespace App.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("NVARCHAR");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
 
                     b.Property<string>("Neighborhood")
                         .IsRequired()
@@ -74,22 +60,35 @@ namespace App.Infrastructure.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("NVARCHAR");
 
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.HasKey("Id");
+
                     b.ToTable("UserAddress", (string)null);
                 });
 
             modelBuilder.Entity("App.Domain.Entities.UserInformations", b =>
                 {
-                    b.HasBaseType("App.Domain.Abstractions.BaseEntity");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("NVARCHAR");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("DATETIME2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("NVARCHAR");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -110,34 +109,24 @@ namespace App.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("NVARCHAR");
 
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("DATETIME2");
+
                     b.Property<Guid>("UserAddressId")
                         .HasColumnType("UNIQUEIDENTIFIER");
 
                     b.Property<byte>("UserRole")
                         .HasColumnType("TINYINT");
 
+                    b.HasKey("Id");
+
                     b.HasIndex("UserAddressId");
 
                     b.ToTable("UserInformations", (string)null);
                 });
 
-            modelBuilder.Entity("App.Domain.Entities.UserAddress", b =>
-                {
-                    b.HasOne("App.Domain.Abstractions.BaseEntity", null)
-                        .WithOne()
-                        .HasForeignKey("App.Domain.Entities.UserAddress", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("App.Domain.Entities.UserInformations", b =>
                 {
-                    b.HasOne("App.Domain.Abstractions.BaseEntity", null)
-                        .WithOne()
-                        .HasForeignKey("App.Domain.Entities.UserInformations", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("App.Domain.Entities.UserAddress", "UserAddress")
                         .WithMany()
                         .HasForeignKey("UserAddressId")
