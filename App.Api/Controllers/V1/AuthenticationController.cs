@@ -20,9 +20,6 @@ public static class AuthenticationController
         CancellationToken cancellationToken
     )
     {
-        if (registryInformation == null)
-            return Results.BadRequest("Registry informations cannot be null");
-
         var result = await _userService.CreateUserServiceAsync(registryInformation, cancellationToken);
         
         return result.Data is not null
@@ -36,9 +33,6 @@ public static class AuthenticationController
         CancellationToken cancellationToken
     ) 
     {
-        if (login == null)
-            return Results.BadRequest("Login informations cannot be null");
-
         var result = await _userService.LoginServiceAsync(login, cancellationToken);
 
         return result.Data is not null

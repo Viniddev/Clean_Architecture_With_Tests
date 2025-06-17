@@ -20,7 +20,7 @@ public class UserInformations: BaseEntity, IAggregateRoot
     public Guid UserAddressId { get; private set; }
     public virtual UserAddress UserAddress { get; private set; } = null!;
 
-    public UserInformations(RegisterInformation userInformations)
+    public UserInformations(RegisterInformation userInformations, Guid AddressId)
     {
         Name = userInformations.Name;
         Cpf = userInformations.Cpf;
@@ -29,20 +29,6 @@ public class UserInformations: BaseEntity, IAggregateRoot
         Password = userInformations.Password;
         PhoneNumber = userInformations.PhoneNumber;
         UserRole = userInformations.UserRole;
-        UserAddressId = userInformations.UserAddressId;
-    }
-
-    public void Update(RegisterInformation userInformations)
-    {
-        if (userInformations != null)
-        {
-            Name = userInformations.Name;
-            Rg = userInformations.Rg;
-            Email = userInformations.Email;
-            Password = userInformations.Password;
-            PhoneNumber = userInformations.PhoneNumber;
-            UserRole = userInformations.UserRole;
-            UserAddressId = userInformations.UserAddressId;
-        }
+        UserAddressId = AddressId;
     }
 }

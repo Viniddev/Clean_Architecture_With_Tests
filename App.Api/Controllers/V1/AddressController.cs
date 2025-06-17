@@ -19,12 +19,12 @@ public static class AddressController
     }
 
     public static async Task<IResult> GetUserAddressesAsync(
-        [FromServices] IUserAddressService userAddressService,
+        [FromServices] IUserAddressService _userAddressService,
         [FromBody] PagedRequest request,
         CancellationToken cancellationToken
     )
     {
-        var result = await userAddressService.GetAllAddresses(request, cancellationToken);
+        var result = await _userAddressService.GetAllAddresses(request, cancellationToken);
 
         return result.Data is not null 
             ? Results.Ok(result) 
@@ -32,12 +32,12 @@ public static class AddressController
     }
 
     public static async Task<IResult> GetUserAddressById(
-        [FromServices] IUserAddressService userAddressService,
+        [FromServices] IUserAddressService _userAddressService,
         [FromRoute] Guid Id,
         CancellationToken cancellationToken
     )
     {
-        var result = await userAddressService.GetAddressById(Id, cancellationToken);
+        var result = await _userAddressService.GetAddressById(Id, cancellationToken);
 
         return result.Data is not null
             ? Results.Ok(result)
@@ -45,7 +45,7 @@ public static class AddressController
     }
 
     public static async Task<IResult> CreateUserAddressAsync(
-        [FromServices] IUserAddressService userAddressService,
+        [FromServices] IUserAddressService _userAddressService,
         [FromBody] CreateAddressRequest request,
         CancellationToken cancellationToken
     )
@@ -53,14 +53,14 @@ public static class AddressController
         if (request == null)
             return Results.BadRequest("User address information cannot be null");
 
-        var result = await userAddressService.CreateAddress(request, cancellationToken);
+        var result = await _userAddressService.CreateAddress(request, cancellationToken);
 
         return result.Data is not null 
             ? Results.Ok(result) 
             : Results.BadRequest(result);
     }
     public static async Task<IResult> UpdateUserAddressAsync(
-        [FromServices] IUserAddressService userAddressService,
+        [FromServices] IUserAddressService _userAddressService,
         [FromBody] UpdateAddressRequest request,
         CancellationToken cancellationToken
     )
@@ -68,7 +68,7 @@ public static class AddressController
         if (request == null)
             return Results.BadRequest("User address information cannot be null");
 
-        var result = await userAddressService.UpdateAddress(request, cancellationToken);
+        var result = await _userAddressService.UpdateAddress(request, cancellationToken);
 
         return result.Data
             ? Results.Ok(result) 
@@ -76,7 +76,7 @@ public static class AddressController
     }
 
     public static async Task<IResult> DeleteUserAddressAsync(
-        [FromServices] IUserAddressService userAddressService,
+        [FromServices] IUserAddressService _userAddressService,
         [FromRoute] Guid id,
         CancellationToken cancellationToken
     )
@@ -84,7 +84,7 @@ public static class AddressController
         if (id == Guid.Empty)
             return Results.BadRequest("Invalid address ID");
 
-        var result = await userAddressService.DeleteAddress(id, cancellationToken);
+        var result = await _userAddressService.DeleteAddress(id, cancellationToken);
 
         return result.Data 
             ? Results.Ok(result) 

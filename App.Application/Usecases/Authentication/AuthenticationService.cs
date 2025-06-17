@@ -12,6 +12,7 @@ namespace App.Application.Usecases.Authentication;
 
 public class AuthenticationService(
     IUserInformationsRepository _userInfoRepository,
+    IUserAddressRepository _userAddressRepository,
     IUnitOfWork _unitOfWork,
     IConfiguration _configuration
 ) : IAuthenticationService
@@ -42,12 +43,20 @@ public class AuthenticationService(
                 return new BaseResponse<RegisterInformation>(null, 500, "Usuario ja cadastrado no sistema");
         }
 
-        request.Password = PasswordHash.Hash(request.Password);
-        UserInformations NewUser = new(request);
-
-        await _userInfoRepository.CreateAsync(NewUser, cancellationToken);
+        //cria o endereco e commita
+        UserAddress address = new(request.UserAddress);
+        await _userAddressRepository.CreateAsync(address);
         await _unitOfWork.CommitAsync();
 
+        //criptografa senha e passa o id do endereço criado pro usuario
+        request.Password = PasswordHash.Hash(request.Password);
+        UserInformations NewUser = new(request, address.Id);
+
+        //cria o usuário
+        await _userInfoRepository.CreateAsync(NewUser, cancellationToken);
+        
+        //commita e retorna
+        await _unitOfWork.CommitAsync();
         return new BaseResponse<RegisterInformation>(request, 201, "Success."); ;
     }
 }
