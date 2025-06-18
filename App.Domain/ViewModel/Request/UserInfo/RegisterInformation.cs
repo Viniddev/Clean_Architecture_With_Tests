@@ -22,8 +22,8 @@ public class RegisterInformation
     [Required] 
     public string PhoneNumber { get; set; } = string.Empty;
     [Required] 
-    public EUserRoles UserRole { get; private set; } = EUserRoles.User;
+    public EUserRoles UserRole { get; set; } = EUserRoles.User;
     [Required]
-    public CreateAddressRequest UserAddress { get; private set; } = null!;
+    public CreateAddressRequest UserAddress { get; set; } = null!;
    
 }

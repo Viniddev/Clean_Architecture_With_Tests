@@ -35,7 +35,7 @@ public class UserService(IUserInformationsRepository _userRepository, IUnitOfWor
     {
         var response = await _userRepository.GetAllUsers(cancellationToken) ?? [];
 
-        if (response.Count == 0)
+        if (response.Count > 0)
         {
             var listUsersResponse = response.Select(UserInformationResponse.Map).ToList();
             return new PagedResponse<List<UserInformationResponse>>(listUsersResponse, listUsersResponse.Count, listUsersResponse.Count, request.PageNumber);

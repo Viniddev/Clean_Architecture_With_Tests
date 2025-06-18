@@ -31,4 +31,15 @@ public class UserInformations: BaseEntity, IAggregateRoot
         UserRole = userInformations.UserRole;
         UserAddressId = AddressId;
     }
+
+    public UserInformations(RegisterInformation userInformations)
+    {
+        Name = userInformations.Name;
+        Cpf = userInformations.Cpf;
+        Rg = userInformations.Rg;
+        Email = userInformations.Email;
+        Password = userInformations.Password;
+        PhoneNumber = userInformations.PhoneNumber;
+        UserRole = userInformations.UserRole;
+    }
 }

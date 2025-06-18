@@ -9,11 +9,10 @@ public static class AddressController
 {
     public static void MapUserAddressEndpoints(this IEndpointRouteBuilder map)
     {
-        var group = map.MapGroup("api/v1/user-address");
+        var group = map.MapGroup("api/v1/user-address").RequireAuthorization();
 
-        group.MapGet("get-all-addresses", GetUserAddressesAsync);
+        group.MapPut("get-all-addresses", GetUserAddressesAsync);
         group.MapGet("get-addresses-by-id/{id}", GetUserAddressById);
-        group.MapPost("creat-user-address", CreateUserAddressAsync);
         group.MapPut("update-user-address", UpdateUserAddressAsync);
         group.MapDelete("delete-user-address/{id}", DeleteUserAddressAsync);
     }
@@ -44,21 +43,6 @@ public static class AddressController
             : Results.NotFound(result);
     }
 
-    public static async Task<IResult> CreateUserAddressAsync(
-        [FromServices] IUserAddressService _userAddressService,
-        [FromBody] CreateAddressRequest request,
-        CancellationToken cancellationToken
-    )
-    {
-        if (request == null)
-            return Results.BadRequest("User address information cannot be null");
-
-        var result = await _userAddressService.CreateAddress(request, cancellationToken);
-
-        return result.Data is not null 
-            ? Results.Ok(result) 
-            : Results.BadRequest(result);
-    }
     public static async Task<IResult> UpdateUserAddressAsync(
         [FromServices] IUserAddressService _userAddressService,
         [FromBody] UpdateAddressRequest request,

@@ -11,6 +11,7 @@ public class UserInformationResponse
     public string Rg { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
+    public Guid UserAddressId { get; set; }
 
     public static UserInformationResponse Map(UserInformations userInfo) 
     {
@@ -22,7 +23,8 @@ public class UserInformationResponse
             Cpf = userInfo.Cpf,
             Rg = userInfo.Rg,
             Email = userInfo.Email,
-            PhoneNumber = userInfo.PhoneNumber
+            PhoneNumber = userInfo.PhoneNumber,
+            UserAddressId = userInfo.UserAddressId
         };
     }
 }

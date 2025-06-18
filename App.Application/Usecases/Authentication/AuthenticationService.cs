@@ -35,7 +35,7 @@ public class AuthenticationService(
     {
         var ListaUsers = await _userInfoRepository.GetAllUsers(cancellationToken) ?? [];
 
-        if (ListaUsers.Count == 0)
+        if (ListaUsers.Count > 0)
         {
             var Register = ListaUsers.FirstOrDefault(u => u.Cpf.Equals(request.Cpf) || u.Email.Equals(request.Email));
 

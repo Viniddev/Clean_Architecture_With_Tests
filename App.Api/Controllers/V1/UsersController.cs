@@ -9,7 +9,7 @@ public static class UsersController
 {
     public static void MapUsersEndpoints(this IEndpointRouteBuilder map) 
     {
-        var group = map.MapGroup("api/v1/users/");
+        var group = map.MapGroup("api/v1/users/").RequireAuthorization();
 
         group.MapPut("get-all", GetAll);
         group.MapGet("get-by-id/{Id}", GetById);
