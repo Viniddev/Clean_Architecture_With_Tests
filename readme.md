@@ -17,11 +17,16 @@ Sinta-se à vontade para contribuir com o projeto! Para isso:
 5. Faça um push para a branch (`git push origin minha-feature`)
 6. Abra um Pull Request
 
-## 🛠 Incluir migrations
-
+## 🛠 Incluir migrations:
 ```bash
-    dotnet ef migrations add [MigrationName] -p .\App.Infrastructure\ -s .\App.Api\ --verbose
-    dotnet ef database update -p .\App.Infrastructure\ -s .\App.Api\ --verbose
+dotnet ef migrations add [MigrationName] -p .\App.Infrastructure\ -s .\App.Api\ --verbose
+dotnet ef database update -p .\App.Infrastructure\ -s .\App.Api\ --verbose
+```
+
+## ❓ Adicione os user-secrets:
+```bash
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=[YOUR_DB];User ID=sa;Password=[YOUR_PASSWORD];TrustServerCertificate=True;Encrypt=True;Trusted_Connection=True;"
+dotnet user-secrets set "JwtKey" "[YOUR_JWT_KEY]"
 ```
 
 ## 📜 Licença
