@@ -10,7 +10,7 @@ public static class AuthenticationController
     {
         var group = map.MapGroup("api/v1/");
 
-        group.MapPost("login", LoginAsync);
+        group.MapPut("login", LoginAsync);
         group.MapPost("create-user", RegisterAsync);
     }
 
